@@ -8,14 +8,15 @@ export default () => {
   const hookValidator = middlewares
     .validateHookToken(config('AUTH0_DOMAIN'), config('WT_URL'), config('EXTENSION_SECRET'));
 
-  hooks.use('/.extensions/on-uninstall', hookValidator('/.extensions/on-uninstall'));
+  hooks.use('/on-uninstall', hookValidator('/.extensions/on-uninstall'));
   hooks.use(middlewares.managementApiClient({
     domain: config('AUTH0_DOMAIN'),
     clientId: config('AUTH0_CLIENT_ID'),
     clientSecret: config('AUTH0_CLIENT_SECRET')
   }));
 
-  hooks.delete('/.extensions/on-uninstall', (req, res) => {
+  hooks.delete('/on-uninstall', (req, res) => {
+    console.log('Entered deleted')
     const clientId = config('AUTH0_CLIENT_ID');
     // req.auth0.clients.delete({ client_id: clientId })
     //   .then(() => {
