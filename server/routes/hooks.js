@@ -1,7 +1,6 @@
 import { middlewares } from 'auth0-extension-express-tools';
 import { Router as router } from 'express';
 import config from '../lib/config';
-import logger from '../lib/logger';
 
 
 export default () => {
@@ -18,18 +17,18 @@ export default () => {
 
   hooks.delete('/.extensions/on-uninstall', (req, res) => {
     const clientId = config('AUTH0_CLIENT_ID');
-    req.auth0.clients.delete({ client_id: clientId })
-      .then(() => {
-        logger.debug(`Deleted client ${clientId}`);
-        res.sendStatus(204);
-      })
-      .catch((err) => {
-        logger.debug(`Error deleting client: ${config('AUTH0_CLIENT_ID')}`);
-        logger.error(err);
+    // req.auth0.clients.delete({ client_id: clientId })
+    //   .then(() => {
+    //     logger.debug(`Deleted client ${clientId}`);
+    //     res.sendStatus(204);
+    //   })
+    //   .catch((err) => {
+    //     logger.debug(`Error deleting client: ${config('AUTH0_CLIENT_ID')}`);
+    //     logger.error(err);
 
-        // Even if deleting fails, we need to be able to uninstall the extension.
-        res.sendStatus(204);
-      });
+    //     // Even if deleting fails, we need to be able to uninstall the extension.
+    //     res.sendStatus(204);
+    //   });
   });
   return hooks;
 };
